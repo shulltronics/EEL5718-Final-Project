@@ -1,3 +1,5 @@
 mininet
 ryu
 eventlet==0.30.2
+
+matplotlib

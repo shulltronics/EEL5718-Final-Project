@@ -1,0 +1,9 @@
+# Column index is the "number of hops"
+
+            # throughput
+no_flows    2.30Gbps        2.27        2.99
+flows       3.01Gbps        2.71        2.43
+
+            # jitter
+no_flows                    
+flows       0.002ms

@@ -76,14 +76,14 @@ class Controller(app_manager.RyuApp):
         return paths
 
 
-    def add_flow(self, datapath, priority, match, actions, hard_timeout=0, buffer_id=None):
+    def add_flow(self, datapath, priority, match, actions, buffer_id=None):
         """
         Add a flow entry to a switch
         """
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
 
-        mod = parser.OFPFlowMod(datapath=datapath, priority=priority, match=match, actions=actions, hard_timeout=hard_timeout, cookie=0, command=ofproto.OFPFC_ADD)
+        mod = parser.OFPFlowMod(datapath=datapath, priority=priority, match=match, actions=actions, hard_timeout=0, cookie=0, command=ofproto.OFPFC_ADD)
         datapath.send_msg(mod)
 
     @set_ev_cls(event.EventSwitchEnter)
@@ -162,9 +162,8 @@ class Controller(app_manager.RyuApp):
         if pkt.get_protocol(lldp.lldp):
             return
 
-        # Calculate the paths here
-        # for switch in self.switches:
-        #     self.get_paths(switch_id, switch)
+        for switch in self.switches:
+            self.get_paths(switch_id, switch)
 
         # Debug printing:
         # print("\n[" + time.ctime() + "]: Got an OFPPacketIn message: {}".format(msg))
@@ -208,8 +207,8 @@ class Controller(app_manager.RyuApp):
                 in_port=msg.in_port,
                 actions=actions
             )
-            # datapath.send_msg(out)
-            self.add_flow(datapath, 0, match, actions)
+            datapath.send_msg(out)
+            # self.add_flow(datapath, 0, match, actions)
 
         # For IPv4 Packets, do something else
         _ipv4 = pkt.get_protocol(ipv4.ipv4)
@@ -217,5 +216,13 @@ class Controller(app_manager.RyuApp):
             print("Got an IPv4 packet on switch number {0}, port {1}".format(switch_id, in_port))
 
             match = parser.OFPMatch(dl_type=eth.ethertype)
-            actions = [parser.OFPActionOutput(ofproto.OFPP_NORMAL)]  # TODO Fix the flood here
-            self.add_flow(datapath, 0, match, actions, hard_timeout=0)
+            actions = [parser.OFPActionOutput(ofproto.OFPP_NORMAL)]
+            out = parser.OFPPacketOut(
+                datapath=datapath,
+                buffer_id=msg.buffer_id,
+                data=msg.data,
+                in_port=msg.in_port,
+                actions=actions
+            )
+            datapath.send_msg(out)
+            # self.add_flow(datapath, 0, match, actions)
