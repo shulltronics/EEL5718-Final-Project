@@ -1,9 +1,0 @@
-# Latency and jitter as measured with ping tool
-# Column index is the "number of hops"
-
-            # latency
-no_flows    1.957       3.540       4.818
-flows       0.040       0.043       0.047
-            # jitter
-no_flows    0.164       0.445       0.454
-flows       0.014       0.009       0.007

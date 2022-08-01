@@ -1,0 +1,23 @@
+# Use command `iperf -u -s` on server
+# Use command `iperf -b 50000000000 -e -u -c 10.0.0.x` on client
+# the -b flag limits maximum bandwidth to 50Gbps
+# Units are Gbps
+# Column index is the "number of hops"
+
+# DESKTOP
+# Throughput (Gbps)
+3.01    2.71    2.43
+
+# Jitter (ms)
+0.002   
+
+
+# LAPTOP
+# Throughput (Gbps)
+3.81    3.06    2.70    2.31
+3.80    3.11    2.71    2.47
+3.89    3.05    2.51    2.32
+3.73    2.99    2.70    2.46
+3.77    2.99    2.56    2.31
+#avg
+3.80    3.04    2.64    2.37

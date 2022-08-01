@@ -1,0 +1,16 @@
+# Use command `iperf -s` on server
+# Use command `iperf -b 50000000000 -e -c 10.0.0.x` on client
+# the -b flag limits maximum bandwidth to 50Gbps
+# Units are Mbps
+
+# Desktop
+15.1    7.90    5.44
+
+# Laptop
+7.00    3.05    2.11    1.70
+6.83    3.32    2.43    1.54
+6.18    3.26    2.23    1.57
+6.54    3.04    2.15    1.56
+6.28    2.97    2.04    1.57
+#avg
+6.57    3.13    2.19    1.59
